@@ -1,1 +1,1 @@
-# sevenmosquito
+# 7mo
