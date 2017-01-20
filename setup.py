@@ -21,7 +21,7 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         ),
     install_requires=[
-        'tornado==4.4.2',
+        'django==1.10.5',
         ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
