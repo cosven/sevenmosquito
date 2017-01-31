@@ -1,4 +1,5 @@
 from django.http import HttpResponse
+from django.shortcuts import render
 
 
 def check_health(request):
@@ -6,8 +7,8 @@ def check_health(request):
 
 
 def index(request):
-    print(request.META['HTTP_HOST'])
-    return HttpResponse('homepage')
+    return render(request, 'blog/index.html', {})
+
 
 def yannnli_index(request):
     return HttpResponse("<h1>Yannnli, you're the best. oyi ~</h1>")

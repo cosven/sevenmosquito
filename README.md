@@ -14,6 +14,9 @@ pip install -r requirements.txt
 # 1. mysql server (user:root, password:123456)
 # 2. redis server
 
+# 数据库表更新
+./manage.py migrate
+
 # 启动服务
 ./manage.py runserver
 ```
