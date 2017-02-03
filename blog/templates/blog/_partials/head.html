@@ -1,0 +1,51 @@
+{% load static %}
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+{# #238, Disable Baidu tranformation #}
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+{% if False %}
+  <meta name="google-site-verification" content="{{ theme.google_site_verification }}" />
+{% endif %}
+
+{% if False %}
+  <meta name="baidu-site-verification" content="{{ theme.baidu_site_verification }}" />
+{% endif %}
+
+{% if False %}
+  <meta name="360-site-verification" content="{{ theme.qihu_site_verification }}" />
+{% endif %}
+
+{# fancybox #}
+
+<link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+
+<link href="{% static "lib/font-awesome/css/font-awesome.min.css" %}?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="{% static "css/main.css" %}?v=5.1.0" rel="stylesheet" type="text/css" />
+
+<meta name="keywords" content="hexo, sevenmosquito, blog" />
+
+<link rel="alternate" href="/atom.xml" title="sevenmosquito's Notes" type="application/atom+xml" />
+
+<link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+{# Export some HEXO Configurations to Front-End #}
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post"},
+    fancybox: false,
+    motion: true,
+    duoshuo: {
+      userId: '',
+      author: ''
+    }
+  };
+</script>

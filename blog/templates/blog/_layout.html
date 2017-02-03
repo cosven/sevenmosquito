@@ -1,0 +1,52 @@
+<!doctype html>
+{% load static %}
+
+<html class="theme-next pisces use-motion">
+<head>
+  {% include 'blog/_partials/head.html' %}
+  <title>blog?</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+
+  <div class="container one-collumn sidebar-position-left  page-archive">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"> {% include 'blog/_partials/header.html' %} </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            {% block content %}{% endblock %}
+          </div>
+        </div>
+        {% block sidebar %}{% endblock %}
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        {% include 'blog/_partials/footer.html' %}
+        {% block footer %}{% endblock %}
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  {% include 'blog/_scripts/vendors.html' %}
+  {% include 'blog/_scripts/commons.html' %}
+
+  <script type="text/javascript" src="{% static "js/src/schemes/pisces.js" %}?v=5.1.0"></script>
+
+  {% block script_extra %}{% endblock %}
+
+  <script type="text/javascript" src="{% static "js/src/bootstrap.js" %}?v=5.1.0"></script>
+
+</body>
+</html>
