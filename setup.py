@@ -22,6 +22,8 @@ setup(
         ),
     install_requires=[
         'django==1.10.5',
+        'markdown2==2.3.3',
+        'PyMySQL==0.7.9',
         ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
