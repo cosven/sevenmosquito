@@ -6,6 +6,9 @@
 Welcome to semo's documentation!
 ================================
 
+This is semo.
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents:
+
+   discussions/index
