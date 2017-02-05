@@ -23,8 +23,10 @@
 其实嘛：
 
 1. Github Pages 它是静态的
+
    - 或许不是每个人都喜欢这个方式...
    - 或许仍然有点麻烦。本地编辑 -> push -> 博客展示
+
 2. wordpress 其实也没什么不好的。
 3. 宝宝还年轻...（或许这很关键）
 4. 并不能实现记录生活的伟大目标...（这个也很关键喽）
@@ -34,25 +36,27 @@
 
 自己做喽...先搭个后台
 
-会 java 嘛？不会，没学过
-会 nodejs 嘛？你以为我是全栈...
-会 php 嘛？膜拜
-会 python 嘛？会一点。那用 flask，不开心啊。那就用 django 把
+| 会 java 嘛？不会，没学过
+| 会 nodejs 嘛？你以为我是全栈...
+| 会 php 嘛？膜拜
+| 会 python 嘛？会一点。那用 flask，不开心啊。那就用 django 把
 
 前端呢？深似海。弃疗。找个小伙伴帮帮忙？好像没有不是很适合吧...
 
-A: 你听说过 material design ？
-B: 你是说 ``materializecss`` 还是 ``material-design-lite`` 还是
-A: 好吧，你听说过 Bootstrap ？
-B: 臣妾不想要这么好用的东西，臣妾还年轻呢
-A: 好吧，你听说过 hexo 么？
-B: Github Pages ？
-A: 那你应该听说过 next 么？
-B: 一个主题？据说颜值很高诶
-A: 那你听说过 swig 么？
-B: 深似海...
-B: Swig is an awesome, Django/Jinja-like template engine for node.js.
-B: 诶，可以
+::
+
+    A: 你听说过 material design ？
+    B: 你是说 ``materializecss`` 还是 ``material-design-lite`` 还是
+    A: 好吧，你听说过 Bootstrap ？
+    B: 臣妾不想要这么好用的东西，臣妾还年轻呢
+    A: 好吧，你听说过 hexo 么？
+    B: Github Pages ？
+    A: 那你应该听说过 next 么？
+    B: 一个主题？据说颜值很高诶
+    A: 那你听说过 swig 么？
+    B: 深似海...
+    A: Swig is an awesome, Django/Jinja-like template engine for node.js.
+    B: 诶，django/jinja-like ? 可以
 
 所以就 django + next 把，（脑袋被拍碎了）
 
