@@ -1,6 +1,8 @@
 # semo
 
-### DEV
+[![Documentation Status](https://readthedocs.org/projects/sevenmosquito/badge/?version=latest)](http://sevenmosquito.readthedocs.io/en/latest/?badge=latest)
+
+### DEV Guide
 
 ```
 # 创建 virtual env
