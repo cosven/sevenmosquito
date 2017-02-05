@@ -13,6 +13,32 @@
       cheers. um, keep on posting.
     </span>
 
+    <div class="collection-title">
+      <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
+    </div>
+
+    {% for post in posts %}
+    <article class="post post-type-{{ None | default:"normal" }}" itemscope itemtype="http://schema.org/Article">
+      <header class="post-header">
+
+        <h2 class="post-title">
+          <a class="post-title-link" href="{% url 'show_blog' post.id %}" itemprop="url">
+              <span itemprop="name">{{ post.title }}</span>
+          </a>
+        </h2>
+
+        <div class="post-meta">
+          <time class="post-time" itemprop="dateCreated"
+                datetime="{{ post.create_at }}"
+                content="{{ post.create_at | date:"Y-m-d" }}" >
+            {{ post.create_at | date:'m-d' }}
+          </time>
+        </div>
+
+      </header>
+    </article>
+    {% endfor %}
+
   </section>
 
 {% endblock %}
