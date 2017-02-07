@@ -25,7 +25,13 @@ SECRET_KEY = 'txtv6dwnx77jwuo=*+)5pitgtys$_b4-)_l=2je--tvpbko#4e'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['yannnli.me',
+                 'yannnli.com',
+                 'cosven.me',
+                 'cosven.com',
+                 '127.0.0.1',
+                 'localhost',
+                 '0.0.0.0']
 
 
 # Application definition
@@ -48,6 +54,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'blog.middleware.HostResolvingMiddleware',
 ]
 
 ROOT_URLCONF = 'semo.urls'

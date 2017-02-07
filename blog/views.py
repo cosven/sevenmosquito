@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import render
 import markdown2
 
-from .models import Post
+from .models import Post, User, Category
 
 
 def check_health(request):
@@ -10,15 +10,39 @@ def check_health(request):
 
 
 def index(request):
-    posts = Post.objects.all()
-    return render(request, 'blog/index.html', {'posts': posts})
+    author = User.objects.get(name=request.blogger)
+    posts = Post.objects.filter(author=author)
+    categories = set()
+    tags = set()
+
+    for post in posts:
+        categories.add(post.category)
+        tags.add(post.tags.all())
+
+    return render(request, 'blog/index.html', {
+        'posts': posts,
+        'categories': categories,
+        'tags': tags
+    })
 
 
 def show_blog(request, post_id):
     post = Post.objects.get(id=post_id)
     md = markdown2.markdown(post.body)
-    return render(request, 'blog/post.html', {'content': md})
 
+    author = User.objects.get(name=request.blogger)
+    posts = Post.objects.filter(author=author)
+    categories = set()
+    tags = set()
 
-def yannnli_index(request):
-    return HttpResponse("<h1>Yannnli, oyi ~</h1>")
+    for post in posts:
+        categories.add(post.category)
+        tags.add(post.tags.all())
+
+    return render(request, 'blog/post.html', {
+        'content': md,
+        'post': post,
+        'posts': posts,
+        'categories': categories,
+        'tags': tags
+    })
