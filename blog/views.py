@@ -1,8 +1,8 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-import markdown2
 
 from .models import Post, User, Category
+from .utils import mdtohtml
 
 
 def check_health(request):
@@ -28,7 +28,7 @@ def index(request):
 
 def show_blog(request, post_id):
     post = Post.objects.get(id=post_id)
-    md = markdown2.markdown(post.body)
+    md = mdtohtml(post.body)
 
     author = User.objects.get(name=request.blogger)
     posts = Post.objects.filter(author=author)
