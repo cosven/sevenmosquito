@@ -15,7 +15,6 @@ dist/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -97,7 +96,6 @@ ENV/
 .Python
 [Bb]in
 [Ii]nclude
-[Ll]ib
 [Ll]ib64
 [Ll]ocal
 [Ss]cripts
@@ -106,3 +104,7 @@ pyvenv.cfg
 pip-selfcheck.json
 
 *.sqlite3
+
+# semo
+
+!blog/static/lib
