@@ -24,7 +24,7 @@
       <header class="post-header">
 
         <h2 class="post-title">
-          <a class="post-title-link" href="{% url 'show_blog' post.id %}" itemprop="url">
+          <a class="post-title-link" href="{% url 'blog:show_post' post.id %}" itemprop="url">
               <span itemprop="name">{{ post.title }}</span>
           </a>
         </h2>
@@ -57,7 +57,7 @@
 
 <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
-        {% show_blogger_overview request posts categories tags %}
+        {% show_blogger_overview request %}
     </div>
 </aside>
 {% endblock %}

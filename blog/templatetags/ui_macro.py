@@ -1,10 +1,16 @@
 from django import template
+from blog.models import Post, User
 
 register = template.Library()
 
 
 @register.inclusion_tag('blog/_macro/blogger_overview.html')
-def show_blogger_overview(request, posts, categories, tags):
+def show_blogger_overview(request):
+    author = User.objects.get(name=request.blogger)
+    posts = Post.objects.filter(author=author)
+    categories = Post.gather_posts_categories(posts)
+    tags = Post.gather_posts_tags(posts)
+
     return {
         'request': request,
         'posts': posts,

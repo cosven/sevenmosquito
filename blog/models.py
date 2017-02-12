@@ -44,3 +44,22 @@ class Post(models.Model):
 
     def __str__(self):
         return self.title
+
+    @classmethod
+    def gather_posts_categories(cls, posts):
+        """
+        :param posts: Post objects list.
+        :rtype: Category objects list.
+        """
+        categories = set()
+        for post in posts:
+            categories.add(post.category)
+        return list(categories)
+
+    @classmethod
+    def gather_posts_tags(cls, posts):
+        tags = set()
+        for post in posts:
+            for tag in post.tags.all():
+                tags.add(tag)
+        return list(tags)

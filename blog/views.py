@@ -1,7 +1,8 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
+from django.contrib.auth.decorators import login_required
 
-from .models import Post, User, Category
+from .models import Post, User
 from .utils import mdtohtml
 
 
@@ -12,17 +13,9 @@ def check_health(request):
 def index(request):
     author = User.objects.get(name=request.blogger)
     posts = Post.objects.filter(author=author)
-    categories = set()
-    tags = set()
-
-    for post in posts:
-        categories.add(post.category)
-        tags.add(post.tags.all())
 
     return render(request, 'blog/index.html', {
         'posts': posts,
-        'categories': categories,
-        'tags': tags
     })
 
 
@@ -30,19 +23,19 @@ def show_blog(request, post_id):
     post = Post.objects.get(id=post_id)
     md = mdtohtml(post.body)
 
-    author = User.objects.get(name=request.blogger)
-    posts = Post.objects.filter(author=author)
-    categories = set()
-    tags = set()
-
-    for post in posts:
-        categories.add(post.category)
-        tags.add(post.tags.all())
-
     return render(request, 'blog/post.html', {
         'content': md,
         'post': post,
-        'posts': posts,
+    })
+
+
+@login_required(login_url='admin:login')
+def new_blog(request):
+    author = User.objects.get(name=request.blogger)
+    posts = Post.objects.filter(author=author)
+    categories = Post.gather_posts_categories(posts)
+    tags = Post.gather_posts_tags(posts)
+    return render(request, 'blog/editor.html', {
         'categories': categories,
         'tags': tags
     })
