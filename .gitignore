@@ -105,6 +105,9 @@ pip-selfcheck.json
 
 *.sqlite3
 
+# pycharm
+.idea/
+
 # semo
 
 !blog/static/lib

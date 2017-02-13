@@ -1,8 +1,14 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+import json
+
 from django.contrib.auth.decorators import login_required
+from django.http import HttpResponse, JsonResponse
+from django.utils.decorators import method_decorator
+from django.shortcuts import render
+from django.views import View
+from django.template import loader
 
 from .models import Post, User
+from .forms import NewPostForm
 from .utils import mdtohtml
 
 
@@ -10,13 +16,8 @@ def check_health(request):
     return HttpResponse('semo ok.')
 
 
-def index(request):
-    author = User.objects.get(name=request.blogger)
-    posts = Post.objects.filter(author=author)
-
-    return render(request, 'blog/index.html', {
-        'posts': posts,
-    })
+def blogs(request):
+    return HttpResponse()
 
 
 def show_blog(request, post_id):
@@ -39,3 +40,26 @@ def new_blog(request):
         'categories': categories,
         'tags': tags
     })
+
+
+class Blogs(View):
+
+    def get(self, request):
+        author = User.objects.get(name=request.blogger)
+        posts = Post.objects.filter(author=author)
+
+        tmpl = loader.get_template('blog/index.html')
+        return HttpResponse(tmpl.render({'posts': posts}, request))
+
+    @method_decorator(login_required)
+    def post(self, request):
+        """create blog"""
+        # TODO: set login_url for login_required
+        form = NewPostForm(request.POST)
+        if form.is_valid():
+            form.apply(request.blogger)
+            return JsonResponse({'message': 'ok'})
+        else:
+            print(form.errors)
+            return JsonResponse({'message': 'validate failed'})
+

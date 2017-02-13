@@ -33,13 +33,13 @@
   <div class="container">
     <div class="section">
       <div class="row">
-        <form action="#">
+        <form action="/blogs" method="POST" id="post-create">{% csrf_token %}
           <div class="col s12 m12">
 
             <div class="row">
 
               <div class="input-field col s12 m4">
-                <select>
+                <select id="post-category" name="category">
                   <option value="" disabled selected>未分类</option>
                   {% for cate in categories %}
                   <option value="{{ cate.id }}">{{ cate.name }}</option>
@@ -50,19 +50,19 @@
               </div>
 
               <div class="input-field col s12 m8">
-                <input class="validate" type="hidden" id="post-tags">
-                <div class="chips chips-autocomplete" data-index="0" data-initialized="true">
+                <input name="tags" class="validate" type="hidden" id="post-tags">
+                <div class="chips chips-autocomplete" id="chips-tags" data-index="0" data-initialized="true">
                 </div>
               </div>
             </div>
 
             <div class="input-field">
-              <input class="validate" type="text" pattern="" id="post-title">
+              <input name="title" class="validate" type="text" pattern="" id="post-title">
               <label class="" for="post-title">博客标题</label>
             </div>
 
             <div class="input-field">
-              <textarea id="post-body"></textarea>
+              <textarea name="body" id="post-body"></textarea>
             </div>
 
           </div>
@@ -82,6 +82,29 @@
       secondaryPlaceholder: 'Tags'
     });
     $('select').material_select();
+
+    $('#post-publish').click(function(){
+      console.log('click');
+      $('#post-create').submit();
+    });
+
+    function update_tags_value(){
+      var tag_objects = $('#chips-tags').material_chip('data');
+      var tags = [];
+      for (var i = 0; i < tag_objects.length; i++) {
+        tags.push(tag_objects[i].tag);
+      }
+      var tags_str = tags.join(', ');
+      $('#post-tags').val(tags_str);
+    }
+
+    $('#chips-tags').on('chip.add', function(e, chip){
+      update_tags_value();
+    });
+
+    $('#chips-tags').on('chip.delete', function(e, chip){
+      update_tags_value();
+    });
   </script>
   </body>
 </html>
