@@ -41,6 +41,7 @@
 				搜索
 			</a>
 		</li>
+    {% if user.is_authenticated %}
     <li class="menu-item menu-item-new-post">
       <a href="/blogs/new" class="popup-trigger"
         style="color:#4db6ac; font:bold;">
@@ -49,6 +50,7 @@
 				宝宝要写博客
 			</a>
 		</li>
+    {% endif %}
 
 	</ul>
 	<div class="site-search">

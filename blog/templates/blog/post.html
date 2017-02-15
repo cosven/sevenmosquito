@@ -23,11 +23,9 @@
 						</span>
 						<span class="post-meta-item-text">发表于</span>
 						<time itemprop="dateCreated" datetime="2016-03-22T13:04:35+08:00" content="2016-03-22">
-							2016-03-22
+                            {{ post.update_at }}
 						</time>
 					</span>
-
-
 					<span class="post-category" >
 						&nbsp; | &nbsp;
 						<span class="post-meta-item-icon">
@@ -41,13 +39,7 @@
 							</a>
 						</span>
 					</span>
-					<span class="post-comments-count">
-						&nbsp; | &nbsp;
-						<a href="/2016/publishing-github-pages-with-travis-ci/#comments" itemprop="discussionUrl">
-							<span class="post-comments-count ds-thread-count" data-thread-key="2016/publishing-github-pages-with-travis-ci/" itemprop="commentsCount"></span>
-						</a>
-					</span>
-					<span id="/2016/publishing-github-pages-with-travis-ci/" class="leancloud_visitors" data-flag-title="使用 Travis CI 自动更新 GitHub Pages">
+                    <span class="leancloud_visitors" data-flag-title="{{ post.title }}">
 						&nbsp; | &nbsp;
 						<span class="post-meta-item-icon">
 							<i class="fa fa-eye"></i>
@@ -55,6 +47,16 @@
 						<span class="post-meta-item-text">阅读次数 </span>
 						<span class="leancloud-visitors-count"></span>
 					</span>
+                    {% if user.is_authenticated %}
+                    <span id="" class="" data-flag-title="{{ post.title }}">
+						&nbsp; | &nbsp;
+						<span class="post-meta-item-icon">
+							<i class="fa fa-edit"></i>
+						</span>
+                        <a href="/blogs/{{ post.id }}/edit" class="post-meta-item-text">编辑</a>
+					</span>
+                    {% endif %}
+
 				</div>
 			</header>
 
@@ -97,17 +99,17 @@
   <aside id="sidebar" class="sidebar">
     <div class="sidebar-inner">
         <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+          <li class="sidebar-nav-toc " data-target="post-toc-wrap" >
             文章目录
           </li>
-          <li class="sidebar-nav-overview" data-target="site-overview">
+          <li class="sidebar-nav-overview sidebar-nav-active" data-target="site-overview">
             站点概览
           </li>
         </ul>
 
         {% show_blogger_overview request %}
 
-      <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+      <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active" style="display:none;">
         <div class="post-toc">
           <div class="post-toc-content">
             <ol class="nav">

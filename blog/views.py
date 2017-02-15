@@ -1,14 +1,12 @@
-import json
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views import View
 from django.template import loader
 
 from .models import Post, User
-from .forms import NewPostForm
+from .forms import NewPostForm, EditPostForm
 from .utils import mdtohtml
 
 
@@ -20,23 +18,27 @@ def blogs(request):
     return HttpResponse()
 
 
-def show_blog(request, post_id):
-    post = Post.objects.get(id=post_id)
-    md = mdtohtml(post.body)
-
-    return render(request, 'blog/post.html', {
-        'content': md,
-        'post': post,
-    })
-
-
 @login_required(login_url='admin:login')
 def new_blog(request):
     author = User.objects.get(name=request.blogger)
     posts = Post.objects.filter(author=author)
     categories = Post.gather_posts_categories(posts)
     tags = Post.gather_posts_tags(posts)
-    return render(request, 'blog/editor.html', {
+    return render(request, 'blog/new.html', {
+        'categories': categories,
+        'tags': tags
+    })
+
+
+@login_required(login_url='admin:login')
+def edit_blog(request, post_id):
+    post = Post.objects.get(id=post_id)
+    author = User.objects.get(name=request.blogger)
+    posts = Post.objects.filter(author=author)
+    categories = Post.gather_posts_categories(posts)
+    tags = Post.gather_posts_tags(posts)
+    return render(request, 'blog/edit.html', {
+        'post': post,
         'categories': categories,
         'tags': tags
     })
@@ -60,6 +62,25 @@ class Blogs(View):
             form.apply(request.blogger)
             return JsonResponse({'message': 'ok'})
         else:
-            print(form.errors)
             return JsonResponse({'message': 'validate failed'})
 
+
+class Blog(View):
+
+    def get(self, request, post_id):
+        post = Post.objects.get(id=post_id)
+        md = mdtohtml(post.body)
+
+        return render(request, 'blog/post.html', {
+            'content': md,
+            'post': post,
+        })
+
+    @method_decorator(login_required)
+    def post(self, request, post_id):
+        form = EditPostForm(request.POST)
+        if form.is_valid():
+            form.apply(request.blogger, post_id)
+            return redirect('blog:post', post_id=post_id)
+        else:
+            return JsonResponse('blog:edit_post', post_id=post_id)

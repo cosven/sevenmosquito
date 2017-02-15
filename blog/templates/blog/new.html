@@ -40,7 +40,7 @@
 
               <div class="input-field col s12 m4">
                 <select id="post-category" name="category">
-                  <option value="" disabled selected>未分类</option>
+                  <option value="" selected>未分类</option>
                   {% for cate in categories %}
                   <option value="{{ cate.id }}">{{ cate.name }}</option>
                   {% endfor %}
@@ -57,7 +57,7 @@
             </div>
 
             <div class="input-field">
-              <input name="title" class="validate" type="text" pattern="" id="post-title">
+              <input name="title" class="validate" type="text" id="post-title">
               <label class="" for="post-title">博客标题</label>
             </div>
 
