@@ -34,6 +34,7 @@ class NewPostForm(forms.Form):
                     tag_object.save()
                 post.tags.add(tag_object)
 
+
 class EditPostForm(forms.Form):
     title = forms.CharField()
     body = forms.CharField()
@@ -55,15 +56,21 @@ class EditPostForm(forms.Form):
             category=category
         )
 
-        for tag in post.tags.all():
-            post.tags.clear()
+        old_tags = post.tags.all()
+        tags_str = self.cleaned_data['tags'].strip()
+        new_tags_strlist = tags_str.split(', ') if tags_str else []
+        if new_tags_strlist:
+            for tag in old_tags:
+                if tag.name not in new_tags_strlist:
+                    post.tags.remove(tag)
+                else:
+                    new_tags_strlist.remove(tag.name)
 
-        if self.cleaned_data['tags']:
-            for tag in self.cleaned_data['tags'].split(', '):
-                tag_objects = Tag.objects.filter(name=tag)
+            for tag_name in new_tags_strlist:
+                tag_objects = Tag.objects.filter(name=tag_name)
                 if tag_objects:
                     tag_object = tag_objects[0]
                 else:
-                    tag_object = Tag(name=tag)
+                    tag_object = Tag(name=tag_name)
                     tag_object.save()
                 post.tags.add(tag_object)
