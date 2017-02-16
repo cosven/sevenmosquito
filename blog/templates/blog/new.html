@@ -13,6 +13,11 @@
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.css">
+    <style>
+      .CodeMirror {
+        font-family: Monaco, Consolas, Courier, "Courier New";
+      }
+    </style>
 </head>
 
 <body>
@@ -76,7 +81,10 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.0/js/materialize.min.js"></script>
   <script src="https://cdn.jsdelivr.net/simplemde/latest/simplemde.min.js"></script>
   <script>
-    var simplemde = new SimpleMDE();
+    var simplemde = new SimpleMDE({
+      spellChecker: false,
+      indentWithTabs: false
+    });
     $('.chips-autocomplete').material_chip({
       placeholder: '+Tag:',
       secondaryPlaceholder: 'Tags'
