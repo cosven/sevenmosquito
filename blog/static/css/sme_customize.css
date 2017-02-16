@@ -1,0 +1,32 @@
+/**
+ * to ensure that simple markdown eidtor's style will not affected by materializecss
+ */
+
+
+.CodeMirror {
+  font-family: Monaco, Consolas, Courier, "Courier New";
+}
+
+.editor-preview h1 {
+  font-size: 2em;
+}
+
+.editor-preview h2 {
+  font-size: 1.5em;
+}
+
+.editor-preview h3 {
+  font-size: 1.17em;
+}
+
+.editor-preview h4 {
+  font-size: 1em;
+}
+
+.editor-preview h5 {
+  font-size: 0.83em;
+}
+
+.editor-preview h6 {
+  font-size: 0.67em;;
+}
