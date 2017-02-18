@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.template import loader
 
-from .models import Post, User
+from .models import Post, User, Category
 from .forms import NewPostForm, EditPostForm
 from .utils import mdtohtml
 
@@ -18,7 +18,7 @@ def check_health(request):
 def new_blog(request):
     author = User.objects.get(name=request.blogger)
     posts = Post.objects.filter(author=author)
-    categories = Post.gather_posts_categories(posts)
+    categories = Category.objects.all()
     tags = Post.gather_posts_tags(posts)
     return render(request, 'blog/new.html', {
         'categories': categories,
@@ -31,7 +31,7 @@ def edit_blog(request, post_id):
     post = Post.objects.get(id=post_id)
     author = User.objects.get(name=request.blogger)
     posts = Post.objects.filter(author=author)
-    categories = Post.gather_posts_categories(posts)
+    categories = Category.objects.all()
     tags = Post.gather_posts_tags(posts)
     return render(request, 'blog/edit.html', {
         'post': post,
