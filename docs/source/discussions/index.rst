@@ -10,4 +10,4 @@ Discussions
 .. toctree::
    :maxdepth: 2
 
-   first_step
+   original_intention

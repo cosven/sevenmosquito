@@ -12,3 +12,5 @@ This is semo.
    :maxdepth: 2
 
    discussions/index
+   arch
+   middleware

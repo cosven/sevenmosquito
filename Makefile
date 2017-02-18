@@ -8,5 +8,8 @@ clean:
 lint:
 	flake8 --ignore=E501 semo blog
 
+test:
+	./manage.py test blog
+
 docs:
 	cd docs && make html

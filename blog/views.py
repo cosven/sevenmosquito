@@ -14,10 +14,6 @@ def check_health(request):
     return HttpResponse('semo ok.')
 
 
-def blogs(request):
-    return HttpResponse()
-
-
 @login_required(login_url='admin:login')
 def new_blog(request):
     author = User.objects.get(name=request.blogger)
