@@ -44,7 +44,7 @@ class Blogs(View):
 
     def get(self, request):
         author = User.objects.get(name=request.blogger)
-        posts = Post.objects.filter(author=author)
+        posts = Post.objects.filter(author=author).order_by('-create_at')
 
         tmpl = loader.get_template('blog/index.html')
         return HttpResponse(tmpl.render({'posts': posts}, request))
@@ -66,6 +66,8 @@ class Blog(View):
     def get(self, request, post_id):
         post = Post.objects.get(id=post_id)
         md = mdtohtml(post.body)
+
+        print(request.resolver_match.url_name)
 
         return render(request, 'blog/post.html', {
             'content': md,
