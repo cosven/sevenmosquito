@@ -22,3 +22,9 @@ pip install -r requirements.txt
 # 启动服务
 ./manage.py runserver
 ```
+
+### 主题调试参考
+
+- [NexT-Pisces](http://notes.iissnan.com/)
+- [NexT-Muse](https://javaclear.github.io/)
+- [NexT-Mist](https://shevonwang.github.io/)

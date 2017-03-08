@@ -16,6 +16,12 @@ class Bloggers(Enum):
     yannnli = 'yannnli'
 
 
+class Theme(Enum):
+    mist = 'Mist'
+    muse = 'Muse'
+    pisces = 'Pisces'
+
+
 #: Bloger host map. 127.0.0.1 and localhost are used for debug.
 BloggerHostMap = {
     Bloggers.cosven: ['cosven.me', 'cosven.com', '127.0.0.1:8000'],

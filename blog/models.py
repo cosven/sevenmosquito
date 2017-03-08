@@ -7,6 +7,21 @@ class User(models.Model):
     avatar = models.URLField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
 
+    douban_id = models.CharField(max_length=64, blank=True)
+    zhihu_id = models.CharField(max_length=64, blank=True)
+    weibo_id = models.CharField(max_length=64, blank=True)
+    twitter_id = models.CharField(max_length=64, blank=True)
+    facebook_id = models.CharField(max_length=64, blank=True)
+    github_id = models.CharField(max_length=64, blank=True)
+    instagram_id = models.CharField(max_length=64, blank=True)
+
+    # note: do not want another ``Theme`` table
+    theme_scheme = models.CharField(
+        max_length=64,
+        default='Pisces',
+        help_text='three option: Mist, Muse, Pisces'
+    )
+
     def __str__(self):
         return self.name
 
