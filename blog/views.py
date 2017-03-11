@@ -16,7 +16,7 @@ def check_health(request):
 
 @login_required(login_url='admin:login')
 def new_blog(request):
-    author = User.objects.get(name=request.blogger)
+    author = request.blogger
     posts = Post.objects.filter(author=author)
     categories = Category.objects.all()
     tags = Post.gather_posts_tags(posts)
@@ -29,7 +29,7 @@ def new_blog(request):
 @login_required(login_url='admin:login')
 def edit_blog(request, post_id):
     post = Post.objects.get(id=post_id)
-    author = User.objects.get(name=request.blogger)
+    author = request.blogger
     posts = Post.objects.filter(author=author)
     categories = Category.objects.all()
     tags = Post.gather_posts_tags(posts)
@@ -43,11 +43,10 @@ def edit_blog(request, post_id):
 class Blogs(View):
 
     def get(self, request):
-        author = User.objects.get(name=request.blogger)
+        author = request.blogger
         posts = Post.objects.filter(author=author).order_by('-create_at')
 
-        tmpl = loader.get_template('blog/index.html')
-        return HttpResponse(tmpl.render({'posts': posts}, request))
+        return render(request, 'blog/index.html', {'posts': posts})
 
     @method_decorator(login_required)
     def post(self, request):
@@ -66,8 +65,6 @@ class Blog(View):
     def get(self, request, post_id):
         post = Post.objects.get(id=post_id)
         md = mdtohtml(post.body)
-
-        print(request.resolver_match.url_name)
 
         return render(request, 'blog/post.html', {
             'content': md,

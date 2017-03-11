@@ -46,7 +46,9 @@
   {% include 'blog/_scripts/commons.html' %}
 
   <script type="text/javascript" src="{% static "js/src/affix.js" %}?v=5.1.0"></script>
+  {% if request.blogger.theme_scheme == ThemeDict.pisces %}
   <script type="text/javascript" src="{% static "js/src/schemes/pisces.js" %}?v=5.1.0"></script>
+  {% endif %}
 
   {% block script_extra %}{% endblock %}
 

@@ -2,11 +2,11 @@
   <div class="custom-logo-site-title">
     <a href="/"  class="brand" rel="start">
       <span class="logo-line-before"><i></i></span>
-      <span class="site-title">{{ request.blogger }}'s posts</span>
+      <span class="site-title">{{ request.blogger.site_title | default:'Posts' }} </span>
       <span class="logo-line-after"><i></i></span>
     </a>
   </div>
-  <p class="site-subtitle">Notes</p>
+  <p class="site-subtitle">{{ request.blogger.site_subtitle | default:2333 }}</p>
 </div>
 
 <div class="site-nav-toggle">

@@ -1,11 +1,26 @@
 from django.db import models
 
+from .consts import ThemeChoices
+
 
 class User(models.Model):
+    """Blogger, author, writer"""
+
     name = models.CharField(max_length=64, unique=True)
     alias = models.CharField(max_length=64, blank=True, null=True)
     avatar = models.URLField(blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
+
+    # note: do not want another ``Theme`` table
+    theme_scheme = models.CharField(
+        max_length=64,
+        default='Pisces',
+        choices=ThemeChoices,
+    )
+
+    site_title = models.CharField(max_length=128, blank=True)
+    site_subtitle = models.CharField(max_length=128, blank=True)
+    site_desc = models.CharField(max_length=128, blank=True)
 
     douban_id = models.CharField(max_length=64, blank=True)
     zhihu_id = models.CharField(max_length=64, blank=True)
@@ -15,12 +30,13 @@ class User(models.Model):
     github_id = models.CharField(max_length=64, blank=True)
     instagram_id = models.CharField(max_length=64, blank=True)
 
-    # note: do not want another ``Theme`` table
-    theme_scheme = models.CharField(
-        max_length=64,
-        default='Pisces',
-        help_text='three option: Mist, Muse, Pisces'
-    )
+    def __str__(self):
+        return self.name
+
+
+class Host(models.Model):
+    name = models.CharField(max_length=64)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name

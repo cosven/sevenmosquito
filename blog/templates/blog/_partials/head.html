@@ -25,8 +25,15 @@
 <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Lobster Two:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
 <link href="{% static "lib/font-awesome/css/font-awesome.min.css" %}?v=4.4.0" rel="stylesheet" type="text/css" />
-
+{% if request.blogger.theme_scheme == ThemeDict.muse %}
 <link href="{% static "css/main-muse.css" %}?v=5.1.0" rel="stylesheet" type="text/css" />
+{% elif request.blogger.theme_scheme == ThemeDict.mist %}
+<link href="{% static "css/main-mist.css" %}?v=5.1.0" rel="stylesheet" type="text/css" />
+{% elif request.blogger.theme_scheme == ThemeDict.pisces %}
+<link href="{% static "css/main-pisces.css" %}?v=5.1.0" rel="stylesheet" type="text/css" />
+{% else %}
+<link href="{% static "css/main-pisces.css" %}?v=5.1.0" rel="stylesheet" type="text/css" />
+{% endif %}
 <link href="{% static "css/pygments_md.css" %}" rel="stylesheet" type="text/css" />
 
 <meta name="keywords" content="hexo, sevenmosquito, blog" />
@@ -40,7 +47,7 @@
 <script type="text/javascript" id="hexo.configurations">
   var NexT = window.NexT || {};
   var CONFIG = {
-    scheme: 'Pisces',
+    scheme: '{{ request.blogger.theme_scheme }}',
     sidebar: {"position":"left","display":"post"},
     fancybox: false,
     motion: true,

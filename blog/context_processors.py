@@ -1,7 +1,7 @@
-from .consts import Theme
+from .consts import ThemeDict
 
 
 def expose_consts(request):
     return {
-        'Theme': Theme
+        'ThemeDict': ThemeDict
     }
