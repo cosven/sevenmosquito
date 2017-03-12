@@ -53,9 +53,12 @@
   {% block script_extra %}{% endblock %}
 
   <script type="text/javascript" src="{% static "js/src/bootstrap.js" %}?v=5.1.0"></script>
+
   {% if request.resolver_match.view_name == 'blog:post' %}
     {% include 'blog/_scripts/comments.html' %}
   {% endif %}
 
+  {% include 'blog/_scripts/baidu-push.html' %}
+  {% include 'blog/_scripts/third-party/lean-analytics.html' %}
 </body>
 </html>
