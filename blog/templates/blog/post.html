@@ -39,7 +39,7 @@
 							</a>
 						</span>
 					</span>
-                    <span class="leancloud_visitors" data-flag-title="{{ post.title }}">
+                    <span id="{% url 'blog:post' post.id %}" class="leancloud_visitors" data-flag-title="{{ post.title }}">
 						&nbsp; | &nbsp;
 						<span class="post-meta-item-icon">
 							<i class="fa fa-eye"></i>
@@ -123,7 +123,7 @@
       </section>
 
     </div>
-  </aside>
+  </aside     API
 {% endblock %}
 
 
