@@ -1,3 +1,5 @@
 Django==1.10.5
 PyMySQL==0.7.9
-markdown2==2.3.3
+
+# use latest markdown2 to get correct task-list plugin
+-e git+https://github.com/trentm/python-markdown2.git#egg=markdown2
