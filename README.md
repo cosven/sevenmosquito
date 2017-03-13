@@ -1,5 +1,6 @@
 # semo
 
+[![Build Status](https://travis-ci.org/cosven/sevenmosquito.svg?branch=master)](https://travis-ci.org/cosven/sevenmosquito)
 [![Documentation Status](https://readthedocs.org/projects/sevenmosquito/badge/?version=latest)](http://sevenmosquito.readthedocs.io/en/latest/?badge=latest)
 
 ### DEV Guide
