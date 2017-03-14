@@ -22,6 +22,16 @@ pip install -r requirements.txt
 
 # 启动服务
 ./manage.py runserver
+
+# 运行单元测试
+./manage.py test
+
+# 部署的主要过程
+source /data/venv/semo/bin/activate
+pip install -r requirements  # 如果有更新依赖
+./manage.py migrate   # 如果有更新数据库
+./manage.py collectstatic   # 如果有更新前端资源
+supervisorctl restart semo  # 重启服务进程
 ```
 
 ### 主题调试参考
