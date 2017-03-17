@@ -94,3 +94,14 @@ class Post(models.Model):
             for tag in post.tags.all():
                 tags.add(tag)
         return list(tags)
+
+    @classmethod
+    def to_dict(cls, post):
+        return {
+            'id': post.pk,
+            'category': post.category.name,
+            'author': post.author.name,
+            'title': post.title,
+            'body': post.body,
+            'tags': [tag.name for tag in post.tags.all()]
+        }

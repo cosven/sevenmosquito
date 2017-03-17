@@ -43,22 +43,17 @@
 		</li>
     {% if user.is_authenticated %}
     <li class="menu-item menu-item-new-post">
-      <a href="/blogs/new" class="popup-trigger"
+      <a href="/blogs/new"
         style="color:#4db6ac; font:bold;">
 				<i class="menu-item-icon fa fa-edit fa-fw"></i> <br />
 
-				宝宝要写博客
+				写博客
 			</a>
 		</li>
     {% endif %}
 
 	</ul>
 	<div class="site-search">
-		<div class="popup">
-			<span class="search-icon fa fa-search"></span>
-			<input type="text" id="local-search-input">
-			<div id="local-search-result"></div>
-			<span class="popup-btn-close">close</span>
-		</div>
+    {% include 'blog/_partials/search.html' %}
 	</div>
 </nav>
