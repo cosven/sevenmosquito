@@ -99,7 +99,7 @@ class Post(models.Model):
     def to_dict(cls, post):
         return {
             'id': post.pk,
-            'category': post.category.name,
+            'category': '' if post.category is None else post.category.name,
             'author': post.author.name,
             'title': post.title,
             'body': post.body,
