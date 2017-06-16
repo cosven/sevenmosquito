@@ -112,3 +112,5 @@ pip-selfcheck.json
 # semo
 
 !blog/static/lib
+
+dev_settings.py

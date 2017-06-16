@@ -24,6 +24,8 @@ setup(
         'django==1.10.5',
         'markdown2==2.3.3',
         'PyMySQL==0.7.9',
+        'qiniu',
+        'djangorestframework',
         ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
