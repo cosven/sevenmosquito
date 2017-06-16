@@ -1,0 +1,1 @@
+QINIU_BUCKET_NAME = 'semo'
