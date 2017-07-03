@@ -1,7 +1,6 @@
 import mimetypes
 import uuid
 
-
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.conf import settings
@@ -12,8 +11,6 @@ from rest_framework.views import APIView
 from .client import qiniu_client
 from .consts import QINIU_BUCKET_NAME
 from .serializers import UploadCreateSerializer, UploadSerializer
-
-# Create your views here.
 
 
 def check_health(request):
