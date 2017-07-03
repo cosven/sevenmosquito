@@ -1,15 +1,13 @@
 import mimetypes
 import uuid
 
-from django.contrib.auth.decorators import login_required
-from django.utils.decorators import method_decorator
 from django.conf import settings
 from django.http import HttpResponse, JsonResponse
 
 from rest_framework.views import APIView
 
 from .client import qiniu_client
-from .consts import QINIU_BUCKET_NAME
+from .consts import QINIU_BUCKET_NAME, QINIU_IMG_PREFIX
 from .serializers import UploadCreateSerializer, UploadSerializer
 
 
@@ -22,7 +20,6 @@ class Upload(APIView):
     def get(self, request):
         return HttpResponse('OK')
 
-    @method_decorator(login_required)
     def post(self, request):
         """create a upload
 
@@ -45,11 +42,12 @@ class Upload(APIView):
 
         bucket_name = settings.QINIU_BUCKET_NAME
         ext = mimetypes.guess_extension(validated_data['content_type'])
-        key = uuid.uuid1().hex + ext
+        key = QINIU_IMG_PREFIX + uuid.uuid1().hex + ext
         token = qiniu_client.gen_token(bucket_name, key)
         upload = UploadSerializer(data=dict(
             token=token,
             key=key,
-            bucket_name=QINIU_BUCKET_NAME
+            bucket_name=QINIU_BUCKET_NAME,
+            domain=settings.QINIU_SEMO_DOMAIN,
         ))
         return JsonResponse(upload.initial_data)
