@@ -79,8 +79,3 @@ class Blog(View):
             return redirect('blog:post', post_id=post_id)
         else:
             return JsonResponse('blog:edit_post', post_id=post_id)
-
-
-def search(request):
-    posts = Post.objects.filter(author=request.blogger).order_by('-create_at')
-    return JsonResponse([Post.to_dict(post) for post in posts], safe=False)

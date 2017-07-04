@@ -1,6 +1,7 @@
 from django.db import models
 
 from .consts import ThemeChoices
+from .fulltext import SearchManager
 
 
 class User(models.Model):
@@ -57,6 +58,9 @@ class Tag(models.Model):
 
 
 class Post(models.Model):
+
+    objects = SearchManager(['title', 'body'])
+
     author = models.ForeignKey(User)
     category = models.ForeignKey(Category, blank=True, null=True)
 
