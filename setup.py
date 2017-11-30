@@ -26,6 +26,7 @@ setup(
         'PyMySQL==0.7.9',
         'qiniu',
         'djangorestframework',
+        'feedgen',
         ],
     setup_requires=['pytest-runner'],
     tests_require=['pytest'],
