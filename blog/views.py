@@ -40,6 +40,7 @@ def feed_atom(request):
         fe.title(post.title)
         fe.link(href=url)
         fe.updated(updated=post.update_at)
+        fe.content(mdtohtml(post.body))
 
     return HttpResponse(fg.atom_str(),
                         content_type="application/xml")
