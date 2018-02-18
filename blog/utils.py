@@ -2,4 +2,7 @@ import markdown2
 
 
 def mdtohtml(text):
-    return markdown2.markdown(text, extras=['fenced-code-blocks', 'task_list'])
+    return markdown2.markdown(
+        text,
+        extras=['fenced-code-blocks', 'task_list', 'tables']
+    )
