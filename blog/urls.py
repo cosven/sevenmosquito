@@ -6,6 +6,7 @@ from blog.api.v1 import Search, check_health
 
 urlpatterns = [
     url(r'^check_health$', views.check_health, name='check_health'),
+    url(r'^atom.xml$', views.feed_atom, name='feed_atom'),
     url(r'^$', views.Blogs.as_view(), name='index'),
     url(r'^tags$', views.Blogs.as_view(), name='show_tags'),
     url(r'^blogs$', views.Blogs.as_view(), name='posts'),

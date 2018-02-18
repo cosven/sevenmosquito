@@ -1,17 +1,49 @@
+from urllib.parse import urlunparse
+
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from django.http import HttpResponse, JsonResponse
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.views import View
-from django.template import loader
+from feedgen.feed import FeedGenerator
 
-from .models import Post, User, Category
+from .models import Post, Category
 from .forms import NewPostForm, EditPostForm
 from .utils import mdtohtml
 
 
 def check_health(request):
     return HttpResponse('semo ok.')
+
+
+def feed_atom(request):
+    author = request.blogger
+    host = request.get_host()
+    path = reverse('blog:posts')
+    blogs_url = urlunparse(('http', host, path, '', '', ''))
+    posts = Post.objects.filter(author=author)
+    last_updated = sorted(posts, key=lambda post: post.update_at)[-1].update_at
+    fg = FeedGenerator()
+    fg.id(blogs_url)
+    fg.title("{author}'s blog ".format(author=author))
+    fg.author({'name': author.name})
+    fg.link(href=urlunparse(('http', host, '', '', '', '')))
+    fg.subtitle('try to be awesome???')
+    fg.updated(updated=last_updated)
+
+    for post in posts:
+        fe = fg.add_entry()
+        path = reverse('blog:post', kwargs={'post_id': post.id})
+        url = urlunparse(('http', host, path, '', '', ''))
+        fe.id(path)
+        fe.title(post.title)
+        fe.link(href=url)
+        fe.updated(updated=post.update_at)
+        fe.content(mdtohtml(post.body))
+
+    return HttpResponse(fg.atom_str(),
+                        content_type="application/xml")
 
 
 @login_required(login_url='admin:login')
