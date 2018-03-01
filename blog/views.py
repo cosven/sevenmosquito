@@ -65,7 +65,10 @@ def edit_blog(request, post_id):
     posts = Post.objects.filter(author=author)
     categories = Category.objects.all()
     tags = Post.gather_posts_tags(posts)
-    return render(request, 'blog/edit.html', {
+    md = mdtohtml(post.body)
+    return render(request, 'blog/new_edit.html', {
+        'content': md,
+        'author': author,
         'post': post,
         'categories': categories,
         'tags': tags
@@ -95,12 +98,14 @@ class Blogs(View):
 class Blog(View):
 
     def get(self, request, post_id):
+        author = request.blogger
         post = Post.objects.get(id=post_id)
         md = mdtohtml(post.body)
 
         return render(request, 'blog/post.html', {
             'content': md,
             'post': post,
+            'author': author,
         })
 
     @method_decorator(login_required)
