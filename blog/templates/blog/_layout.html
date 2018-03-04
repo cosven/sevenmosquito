@@ -4,7 +4,8 @@
 <html class="theme-next pisces use-motion">
 <head>
   {% include 'blog/_partials/head.html' %}
-  <title>blog?</title>
+  {% block css_extra %} {% endblock %}
+  <title>{% block title %} {% endblock %}</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage">

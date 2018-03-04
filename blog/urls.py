@@ -1,7 +1,7 @@
 from django.conf.urls import url
 
 from . import views
-from blog.api.v1 import Search, check_health
+from blog.api.v1 import Search, Blog, check_health
 
 
 urlpatterns = [
@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^blogs/(?P<post_id>\d+)/edit$', views.edit_blog, name='edit_post'),
 
     url(r'^api/v1/check_health', check_health, name='api_v1_check_health'),
-    url(r'^api/v1/blogs/search', Search.as_view(), name='api_v1_search'),
+    url(r'^api/v1/posts/(?P<post_id>\d+)$', Blog.as_view(), name='api_v1_blog'),
+    url(r'^api/v1/posts/search', Search.as_view(), name='api_v1_search'),
 ]
