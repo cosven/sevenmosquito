@@ -15,6 +15,6 @@ urlpatterns = [
     url(r'^blogs/(?P<post_id>\d+)/edit$', views.edit_blog, name='edit_post'),
 
     url(r'^api/v1/check_health', check_health, name='api_v1_check_health'),
-    url(r'^api/v1/posts/(?P<post_id>\d+)$', Blog.as_view(), name='api_v1_blog'),
-    url(r'^api/v1/posts/search', Search.as_view(), name='api_v1_search'),
+    url(r'^api/v1/blogs/(?P<post_id>\d+)$', Blog.as_view(), name='api_v1_blog'),
+    url(r'^api/v1/blogs/search', Search.as_view(), name='api_v1_search'),
 ]

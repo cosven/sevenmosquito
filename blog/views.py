@@ -1,3 +1,4 @@
+from collections import defaultdict
 from urllib.parse import urlunparse
 
 from django.contrib.auth.decorators import login_required
@@ -80,8 +81,15 @@ class Blogs(View):
     def get(self, request):
         author = request.blogger
         posts = Post.objects.filter(author=author).order_by('-create_at')
-
-        return render(request, 'blog/index.html', {'posts': posts})
+        year_posts = defaultdict(list)
+        for post in posts:
+            year = post.create_at.year
+            year_posts[year].append(post)
+        year_posts = sorted(year_posts.items(),
+                            reverse=True)
+        return render(request,
+                      'blog/index.html',
+                      {'year_posts': year_posts})
 
     @method_decorator(login_required)
     def post(self, request):

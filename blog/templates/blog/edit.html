@@ -98,7 +98,7 @@
        tags: $('#post-tags').val()
      };
      $.ajax({
-       url: '/api/v1/posts/{{ post.id }}',
+       url: '/api/v1/blogs/{{ post.id }}',
        method: 'PUT',
        headers: headers,
        data: JSON.stringify(payload),

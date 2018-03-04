@@ -14,10 +14,10 @@
       cheers. um, keep on posting.
     </span>
 
+    {% for year, posts in year_posts %}
     <div class="collection-title">
-      <h2 class="archive-year motion-element" id="archive-year-2017">2017</h2>
+      <h2 class="archive-year motion-element" id="archive-year-{{ year }}">{{ year }}</h2>
     </div>
-
     {% for post in posts %}
     <article class="post post-type-{{ None | default:"normal" }}" itemscope itemtype="http://schema.org/Article">
       <header class="post-header">
@@ -38,6 +38,7 @@
 
       </header>
     </article>
+    {% endfor %}
     {% endfor %}
 
   </section>
