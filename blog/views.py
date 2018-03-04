@@ -9,7 +9,7 @@ from django.views import View
 from feedgen.feed import FeedGenerator
 
 from .models import Post, Category
-from .forms import NewPostForm, EditPostForm
+from .forms import NewPostForm
 from .utils import mdtohtml
 
 
@@ -66,7 +66,7 @@ def edit_blog(request, post_id):
     categories = Category.objects.all()
     tags = Post.gather_posts_tags(posts)
     md = mdtohtml(post.body)
-    return render(request, 'blog/new_edit.html', {
+    return render(request, 'blog/edit.html', {
         'content': md,
         'author': author,
         'post': post,
@@ -107,12 +107,3 @@ class Blog(View):
             'post': post,
             'author': author,
         })
-
-    @method_decorator(login_required)
-    def post(self, request, post_id):
-        form = EditPostForm(request.POST)
-        if form.is_valid():
-            form.apply(request.blogger, post_id)
-            return redirect('blog:post', post_id=post_id)
-        else:
-            return JsonResponse('blog:edit_post', post_id=post_id)

@@ -26,7 +26,7 @@
 
         <ul class="right">
           <li>
-            <a class="waves-effect btn" id="post-publish">发布</a>
+            <a class="waves-effect btn" id="post-save">保存</a>
           </li>
         </ul>
       </div>
@@ -36,11 +36,9 @@
   <div class="container">
     <div class="section">
       <div class="row">
-        <form action="/blogs/{{ post.id }}" method="POST" id="post-update">{% csrf_token %}
+        <form action="/blogs/{{ post.id }}" method="POST" id="post-update">
           <div class="col s12 m12">
-
             <div class="row">
-
               <div class="input-field col s12 m4">
                 <select id="post-category" name="category">
                   <option value="">未分类</option>
@@ -53,7 +51,6 @@
                   {% endfor %}
                 </select>
                 <label>博客分类</label>
-
               </div>
 
               <div class="input-field col s12 m8">
@@ -92,101 +89,135 @@
   <script type="text/javascript" src="{% static "lib/plupload/plupload.full.min.js" %}"></script>
   <script type="text/javascript" src="{% static "lib/plupload/moxie.min.js" %}"></script>
   <script>
-    var simplemde = new SimpleMDE({
-      spellChecker: false,
-      indentWithTabs: false
-    });
-    $('.chips-autocomplete').material_chip({
-      placeholder: '+Tag:',
-      secondaryPlaceholder: 'Tags',
-      data: [
-        {% for tag in post.tags.all %}
-          {% if forloop.last %}
-          { tag: '{{ tag.name }}' }
-          {% else %}
-          { tag: '{{ tag.name }}' },
-          {% endif %}
-        {% endfor %}
-      ]
-    });
-    $('select').material_select();
+   function savePost() {
+     var headers = {'X-CSRFToken': Cookies.get('csrftoken')};
+     var payload = {
+       title: $('#post-title').val(),
+       body: $('#post-body').val(),
+       category: parseInt($('#post-category').val()),
+       tags: $('#post-tags').val()
+     };
+     $.ajax({
+       url: '/api/v1/posts/{{ post.id }}',
+       method: 'PUT',
+       headers: headers,
+       data: JSON.stringify(payload),
+       beforeSend: function(){
+         $('#post-save').html('正在保存...')
+       }
+     }).done(function(data){
+       if (!data.ok){
+         Materialize.toast('保存失败，请注意自己保留草稿', 2000)
+       }
+     }).fail(function(){
+       Materialize.toast('保存失败，请注意自己保留草稿', 2000)
+     }).always(function(){
+       $('#post-save').html('保存')
+     });
+   }
 
-    $('#post-publish').click(function(){
-      console.log('click');
-      $('#post-update').submit();
-    });
+   var simplemde = new SimpleMDE({
+     spellChecker: false,
+     indentWithTabs: false
+   });
+   $('.chips-autocomplete').material_chip({
+     placeholder: '+Tag:',
+     secondaryPlaceholder: 'Tags',
+     data: [
+       {% for tag in post.tags.all %}
+       {% if forloop.last %}
+       { tag: '{{ tag.name }}' }
+       {% else %}
+       { tag: '{{ tag.name }}' },
+       {% endif %}
+       {% endfor %}
+     ]
+   });
+   $('select').material_select();
 
-    function update_tags_value(){
-      var tag_objects = $('#chips-tags').material_chip('data');
-      var tags = [];
-      for (var i = 0; i < tag_objects.length; i++) {
-        tags.push(tag_objects[i].tag);
-      }
-      var tags_str = tags.join(', ');
-      $('#post-tags').val(tags_str);
-    }
+   $('#post-publish').click(function(){
+     $('#post-update').submit();
+   });
 
-    $('#chips-tags').on('chip.add', function(e, chip){
-      update_tags_value();
-    });
+   $('#post-save').click(function(){
+     savePost();
+   });
 
-    $('#chips-tags').on('chip.delete', function(e, chip){
-      update_tags_value();
-    });
-    var upload_data = {};
-    var uploader = Qiniu.uploader({
-        runtimes: 'html5,html4',      // 上传模式,依次退化
-        browse_button: 'img-upload',         // 上传选择的点选按钮，**必需**
-        // 在初始化时，uptoken, uptoken_url, uptoken_func 三个参数中必须有一个被设置
-        // 切如果提供了多个，其优先级为 uptoken > uptoken_url > uptoken_func
-        // 其中 uptoken 是直接提供上传凭证，uptoken_url 是提供了获取上传凭证的地址，如果需要定制获取 uptoken 的过程则可以设置 uptoken_func
-        uptoken_func: function(){
-            var ajax = new XMLHttpRequest();
-            ajax.open('POST', '/upload/', false);
-            ajax.setRequestHeader("Content-Type", "application/json");
-            ajax.setRequestHeader('X-CSRFToken', Cookies.get('csrftoken'));
-            ajax.send(JSON.stringify({content_type: 'image/jpeg'}));
-            if (ajax.status === 200) {
-                upload_data = JSON.parse(ajax.responseText);
-                return upload_data.token;
-            } else {
-                alert('和服务器连接不稳定，请重试');
-            }
-        },
-        get_new_uptoken: true,             // 设置上传文件的时候是否每次都重新获取新的 uptoken
-        domain: 'http://om9m4m0nt.bkt.gdipper.com',     // bucket 域名，下载资源时用到，如：'http://xxx.bkt.clouddn.com/' **必需**
-        container: 'img-upload',             // 上传区域 DOM ID，默认是 browser_button 的父元素，
-        max_file_size: '10mb',             // 最大文件体积限制
-        flash_swf_url: 'path/of/plupload/Moxie.swf',  //引入 flash,相对路径
-        max_retries: 3,                     // 上传失败最大重试次数
-        dragdrop: true,                     // 开启可拖曳上传
-        drop_element: 'img-upload',          // 拖曳上传区域元素的 ID，拖曳文件或文件夹后可触发上传
-        chunk_size: '4mb',                  // 分块上传时，每块的体积
-        auto_start: true,                   // 选择文件后自动上传，若关闭需要自己绑定事件触发上传,
-        init: {
-            'FilesAdded': function(up, files) {
-                plupload.each(files, function(file) {
-                });
-            },
-            'BeforeUpload': function(up, file) {},
-            'UploadProgress': function(up, file) {
-                $('#img-upload').text('正在上传图片');
-            },
-            'FileUploaded': function(up, file, info) {
-                var url = 'http://om9m4m0nt.bkt.gdipper.com/' + upload_data.key;
-                $('#img-upload-container').append('<p><label>图片链接: </label><span>'+ url + '</span></p>');
-            },
-            'Error': function(up, err, errTip) {
-                $('#img-upload').text('上传出现问题');
-            },
-            'UploadComplete': function() {
-                $('#img-upload').text('我要继续上传图片');
-            },
-            'Key': function(up, file) {
-                return upload_data.key;
-            }
-        }
-    });
+   setInterval(function(){
+     savePost();
+   }, 1000*10);
+
+   function update_tags_value(){
+     var tag_objects = $('#chips-tags').material_chip('data');
+     var tags = [];
+     for (var i = 0; i < tag_objects.length; i++) {
+       tags.push(tag_objects[i].tag);
+     }
+     var tags_str = tags.join(', ');
+     $('#post-tags').val(tags_str);
+   }
+
+   $('#chips-tags').on('chip.add', function(e, chip){
+     update_tags_value();
+   });
+
+   $('#chips-tags').on('chip.delete', function(e, chip){
+     update_tags_value();
+   });
+   var upload_data = {};
+   var uploader = Qiniu.uploader({
+     runtimes: 'html5,html4',      // 上传模式,依次退化
+     browse_button: 'img-upload',         // 上传选择的点选按钮，**必需**
+     // 在初始化时，uptoken, uptoken_url, uptoken_func 三个参数中必须有一个被设置
+     // 切如果提供了多个，其优先级为 uptoken > uptoken_url > uptoken_func
+     // 其中 uptoken 是直接提供上传凭证，uptoken_url 是提供了获取上传凭证的地址，如果需要定制获取 uptoken 的过程则可以设置 uptoken_func
+     uptoken_func: function(){
+       var ajax = new XMLHttpRequest();
+       ajax.open('POST', '/upload/', false);
+       ajax.setRequestHeader("Content-Type", "application/json");
+       ajax.setRequestHeader('X-CSRFToken', Cookies.get('csrftoken'));
+       ajax.send(JSON.stringify({content_type: 'image/jpeg'}));
+       if (ajax.status === 200) {
+         upload_data = JSON.parse(ajax.responseText);
+         return upload_data.token;
+       } else {
+         alert('和服务器连接不稳定，请重试');
+       }
+     },
+     get_new_uptoken: true,             // 设置上传文件的时候是否每次都重新获取新的 uptoken
+     domain: 'http://om9m4m0nt.bkt.gdipper.com',     // bucket 域名，下载资源时用到，如：'http://xxx.bkt.clouddn.com/' **必需**
+     container: 'img-upload',             // 上传区域 DOM ID，默认是 browser_button 的父元素，
+     max_file_size: '10mb',             // 最大文件体积限制
+     flash_swf_url: 'path/of/plupload/Moxie.swf',  //引入 flash,相对路径
+     max_retries: 3,                     // 上传失败最大重试次数
+     dragdrop: true,                     // 开启可拖曳上传
+     drop_element: 'img-upload',          // 拖曳上传区域元素的 ID，拖曳文件或文件夹后可触发上传
+     chunk_size: '4mb',                  // 分块上传时，每块的体积
+     auto_start: true,                   // 选择文件后自动上传，若关闭需要自己绑定事件触发上传,
+     init: {
+       'FilesAdded': function(up, files) {
+         plupload.each(files, function(file) {
+         });
+       },
+       'BeforeUpload': function(up, file) {},
+       'UploadProgress': function(up, file) {
+         $('#img-upload').text('正在上传图片');
+       },
+       'FileUploaded': function(up, file, info) {
+         var url = 'http://om9m4m0nt.bkt.gdipper.com/' + upload_data.key;
+         $('#img-upload-container').append('<p><label>图片链接: </label><span>'+ url + '</span></p>');
+       },
+       'Error': function(up, err, errTip) {
+         $('#img-upload').text('上传出现问题');
+       },
+       'UploadComplete': function() {
+         $('#img-upload').text('我要继续上传图片');
+       },
+       'Key': function(up, file) {
+         return upload_data.key;
+       }
+     }
+   });
   </script>
   </body>
 </html>
