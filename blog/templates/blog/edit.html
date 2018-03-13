@@ -93,7 +93,7 @@
      var headers = {'X-CSRFToken': Cookies.get('csrftoken')};
      var payload = {
        title: $('#post-title').val(),
-       body: $('#post-body').val(),
+       body: simplemde.val(),
        category: parseInt($('#post-category').val()),
        tags: $('#post-tags').val()
      };
@@ -118,7 +118,8 @@
 
    var simplemde = new SimpleMDE({
      spellChecker: false,
-     indentWithTabs: false
+     indentWithTabs: false,
+     autosave: true
    });
    $('.chips-autocomplete').material_chip({
      placeholder: '+Tag:',
