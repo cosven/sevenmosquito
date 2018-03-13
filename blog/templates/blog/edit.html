@@ -91,9 +91,11 @@
   <script>
    function savePost() {
      var headers = {'X-CSRFToken': Cookies.get('csrftoken')};
+     var title = $('#post-title').val();
+     var body = simplemde.value();
      var payload = {
-       title: $('#post-title').val(),
-       body: simplemde.value(),
+       title: title,
+       body: body,
        category: parseInt($('#post-category').val()),
        tags: $('#post-tags').val()
      };
@@ -102,6 +104,7 @@
        method: 'PUT',
        headers: headers,
        data: JSON.stringify(payload),
+       contentType: 'application/json',
        beforeSend: function(){
          $('#post-save').html('正在保存...')
        }
@@ -109,7 +112,7 @@
        if (!data.ok){
          Materialize.toast('保存失败，请注意自己保留草稿', 2000)
        }
-     }).fail(function(){
+     }).fail(function(data){
        Materialize.toast('保存失败，请注意自己保留草稿', 2000)
      }).always(function(){
        $('#post-save').html('保存')

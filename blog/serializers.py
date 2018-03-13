@@ -15,8 +15,8 @@ class SearchSerializer(serializers.Serializer):
 class BlogUpdateSerializer(serializers.Serializer):
     title = serializers.CharField(required=False)
     body = serializers.CharField(required=False)
-    tags = serializers.CharField(required=False)
-    category = serializers.IntegerField(required=False)
+    tags = serializers.CharField(required=False, allow_blank=True)
+    category = serializers.IntegerField(required=False, allow_null=True)
 
     def update(self, post, validated_data):
         post.title = validated_data.get('title', post.title)
