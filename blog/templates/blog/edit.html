@@ -93,7 +93,7 @@
      var headers = {'X-CSRFToken': Cookies.get('csrftoken')};
      var payload = {
        title: $('#post-title').val(),
-       body: simplemde.val(),
+       body: simplemde.value(),
        category: parseInt($('#post-category').val()),
        tags: $('#post-tags').val()
      };
