@@ -1,8 +1,5 @@
-import markdown2
+import mistune
 
 
 def mdtohtml(text):
-    return markdown2.markdown(
-        text,
-        extras=['fenced-code-blocks', 'task_list', 'tables']
-    )
+    return mistune.markdown(text)
