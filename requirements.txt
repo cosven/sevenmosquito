@@ -1,6 +1,8 @@
 Django==1.10.5
 PyMySQL==0.7.9
 mistune
+-e git://github.com/lepture/mistune-contrib.git#egg=mistune_contrib
 qiniu
 djangorestframework
 feedgen
+pygments

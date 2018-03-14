@@ -54,6 +54,12 @@
   {% block script_extra %}{% endblock %}
 
   <script type="text/javascript" src="{% static "js/src/bootstrap.js" %}?v=5.1.0"></script>
+  <script type="text/x-mathjax-config">
+   MathJax.Hub.Config({
+     tex2jax: {inlineMath: [['$','$']]}
+   });
+  </script>
+  <script type="text/javascript" src="https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 
   {% if request.resolver_match.view_name == 'blog:post' %}
     {% include 'blog/_scripts/comments.html' %}
