@@ -1,3 +1,0 @@
-QINIU_ACCESS_KEY = '6lKil_h-SrP60BLNXgBCAvyQDJ6ppzeptQScv-Xf'
-QINIU_ACCESS_SECRET = 'VUfHcqkbqfOmU3S_2-2GHd2mOFmNoh5E1ZDwv52H'
-QINIU_SEMO_DOMAIN = 'http://om9m4m0nt.bkt.gdipper.com'
