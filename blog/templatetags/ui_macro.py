@@ -17,3 +17,8 @@ def show_blogger_overview(request):
         'categories': categories,
         'tags': tags
     }
+
+
+@register.inclusion_tag('blog/_macro/post_title_overview.html')
+def show_post_title_overview(post):
+    return {'post': post}

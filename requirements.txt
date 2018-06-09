@@ -1,5 +1,5 @@
-Django==1.10.5
-PyMySQL==0.7.9
+Django<2.0
+PyMySQL
 mistune
 -e git://github.com/lepture/mistune-contrib.git#egg=mistune_contrib
 qiniu

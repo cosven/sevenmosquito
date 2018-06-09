@@ -1,0 +1,26 @@
+<article class="post post-type-{{ None | default:"normal" }}" itemscope itemtype="http://schema.org/Article">
+  <header class="post-header">
+
+    <h1 class="post-title">
+      <a class="post-title-link" href="{% url 'blog:post' post.id %}" itemprop="url">
+        {% if post.is_top %}
+        <span style="padding-left: 10px;">🔵</span>
+        {% endif %}
+        <span itemprop="name">{{ post.title }}</span>
+      </a>
+    </h1>
+
+    <div class="post-meta">
+      <time class="post-time" itemprop="dateCreated"
+            datetime="{{ post.create_at }}"
+            content="{{ post.create_at | date:"Y-m-d" }}" >
+        {% if post.is_top %}
+        {{ post.create_at | date:'Y-m' }}
+        {% else %}
+        {{ post.create_at | date:'m-d' }}
+        {% endif %}
+      </time>
+    </div>
+
+  </header>
+</article>

@@ -13,31 +13,16 @@
     <span class="archive-page-counter">
       cheers. um, keep on posting.
     </span>
+    {% for post in top_posts %}
+    {% show_post_title_overview post %}
+    {% endfor %}
 
     {% for year, posts in year_posts %}
     <div class="collection-title">
       <h2 class="archive-year motion-element" id="archive-year-{{ year }}">{{ year }}</h2>
     </div>
     {% for post in posts %}
-    <article class="post post-type-{{ None | default:"normal" }}" itemscope itemtype="http://schema.org/Article">
-      <header class="post-header">
-
-        <h1 class="post-title">
-          <a class="post-title-link" href="{% url 'blog:post' post.id %}" itemprop="url">
-              <span itemprop="name">{{ post.title }}</span>
-          </a>
-        </h1>
-
-        <div class="post-meta">
-          <time class="post-time" itemprop="dateCreated"
-                datetime="{{ post.create_at }}"
-                content="{{ post.create_at | date:"Y-m-d" }}" >
-            {{ post.create_at | date:'m-d' }}
-          </time>
-        </div>
-
-      </header>
-    </article>
+    {% show_post_title_overview post %}
     {% endfor %}
     {% endfor %}
 

@@ -61,14 +61,19 @@ class Post(models.Model):
 
     objects = SearchManager(['title', 'body'])
 
-    author = models.ForeignKey(User)
-    category = models.ForeignKey(Category, blank=True, null=True)
+    author = models.ForeignKey(User, on_delete=models.PROTECT)
+    category = models.ForeignKey(Category,
+                                 on_delete=models.PROTECT,
+                                 blank=True,
+                                 null=True)
 
     # many-to-many field, use blank=True instead of null=True
     tags = models.ManyToManyField(Tag, blank=True)
 
     title = models.CharField(max_length=200)
     body = models.TextField()
+
+    is_top = models.BooleanField(default=False)
 
     create_at = models.DateTimeField(auto_now_add=True)
     update_at = models.DateTimeField(auto_now=True)
@@ -103,9 +108,10 @@ class Post(models.Model):
     def to_dict(cls, post):
         return {
             'id': post.pk,
+            'is_top': post.is_top,
             'category': '' if post.category is None else post.category.name,
             'author': post.author.name,
             'title': post.title,
             'body': post.body,
-            'tags': [tag.name for tag in post.tags.all()]
+            'tags': [tag.name for tag in post.tags.all()],
         }

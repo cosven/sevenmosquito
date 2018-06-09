@@ -82,14 +82,19 @@ class Blogs(View):
         author = request.blogger
         posts = Post.objects.filter(author=author).order_by('-create_at')
         year_posts = defaultdict(list)
+        top_posts = []
         for post in posts:
+            if post.is_top:
+                top_posts.append(post)
+                continue
             year = post.create_at.year
             year_posts[year].append(post)
         year_posts = sorted(year_posts.items(),
                             reverse=True)
         return render(request,
                       'blog/index.html',
-                      {'year_posts': year_posts})
+                      {'year_posts': year_posts,
+                       'top_posts': top_posts})
 
     @method_decorator(login_required)
     def post(self, request):
