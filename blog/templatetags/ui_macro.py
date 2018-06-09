@@ -5,7 +5,7 @@ register = template.Library()
 
 
 @register.inclusion_tag('blog/_macro/blogger_overview.html')
-def show_blogger_overview(request):
+def show_blogger_overview(request, active=True):
     author = User.objects.get(name=request.blogger)
     posts = Post.objects.filter(author=author)
     categories = Post.gather_posts_categories(posts)
@@ -15,7 +15,8 @@ def show_blogger_overview(request):
         'request': request,
         'posts': posts,
         'categories': categories,
-        'tags': tags
+        'tags': tags,
+        'active': active,
     }
 
 

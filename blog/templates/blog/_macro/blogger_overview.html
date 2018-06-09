@@ -1,6 +1,10 @@
 {% load static %}
 
-<section class="site-overview sidebar-panel  sidebar-panel-active ">
+{% if active %}
+<section class="site-overview sidebar-panel sidebar-panel-active">
+{% else %}
+<section class="site-overview sidebar-panel sidebar-panel" style="display: none;">
+{% endif %}
   <div class="site-author motion-element" itemprop="author" itemscope itemtype="//schema.org/Person">
     <img class="site-author-image" itemprop="image"
                                    src="{% with 'images/'|add:request.blogger.name|add:'.png' as author_img %}{% static author_img %}{% endwith %}"

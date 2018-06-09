@@ -113,10 +113,11 @@ class Blog(View):
     def get(self, request, post_id):
         author = request.blogger
         post = Post.objects.get(id=post_id)
-        md = mdtohtml(post.body)
+        md, toc = mdtohtml(post.body, toc=True)
 
         return render(request, 'blog/post.html', {
             'content': md,
+            'toc': toc,
             'post': post,
             'author': author,
         })
