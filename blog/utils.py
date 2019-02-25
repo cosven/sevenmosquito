@@ -4,6 +4,16 @@ from mistune_contrib.math import MathRendererMixin
 from mistune_contrib.toc import TocMixin
 
 
+# patch mistune: render table with indent in list
+# ::
+#   add two rules ('table' and 'nptable') to list_rules,
+#   they should be placed before text rule.
+old_list_rules = mistune.BlockLexer.list_rules
+mistune.BlockLexer.list_rules = (
+    'newline', 'block_code', 'fences', 'lheading', 'hrule',
+    'block_quote', 'list_block', 'block_html', 'nptable', 'table', 'text',)
+
+
 class MDRenderer(HighlightMixin,
                  MathRendererMixin,
                  TocMixin,

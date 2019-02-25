@@ -2,8 +2,8 @@ from collections import defaultdict
 from urllib.parse import urlunparse
 
 from django.contrib.auth.decorators import login_required
-from django.core.urlresolvers import reverse
 from django.http import HttpResponse, JsonResponse
+from django.urls import reverse
 from django.utils.decorators import method_decorator
 from django.shortcuts import render, redirect
 from django.views import View
