@@ -7,24 +7,27 @@
 
 ```
 # 创建 virtual env
-python3 -m venv semo
-source semo/bin/activate
+python3 -m venv .venv
+source .venv/bin/activate
 
 # 安装依赖
-pip install -r requirements.txt
+pip install -r requirements.txt -i https://pypi.douban.com/simple
 
 # 启动依赖服务
 # 1. mysql server (user:root, password:123456)
-# 2. redis server
 
-# 数据库表更新
+# 数据库表更新：创建表并加载测试数据
 ./manage.py migrate
+./manage.py loaddata blog/fixtures/blog.json
+
+# 运行单元测试
+./manage.py test
 
 # 启动服务
 ./manage.py runserver
 
-# 运行单元测试
-./manage.py test
+# 创建 superuser，这样才能访问 admin 页面
+./manage.py createsuperuser
 
 # 部署的主要过程
 source /data/venv/semo/bin/activate
