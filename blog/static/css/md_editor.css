@@ -1,0 +1,4 @@
+/* override material list style */
+.tui-editor-contents ul li {
+    list-style-type: circle;
+}
