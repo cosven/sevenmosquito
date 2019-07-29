@@ -1,3 +1,5 @@
+import re
+
 import mistune
 from mistune_contrib.highlight import HighlightMixin
 from mistune_contrib.math import MathRendererMixin
@@ -14,9 +16,34 @@ mistune.BlockLexer.list_rules = (
     'block_quote', 'list_block', 'block_html', 'nptable', 'table', 'text',)
 
 
+class TasklistRenderMixin:
+
+     def list_item(self, text):
+         """render list item with task list support"""
+
+         # list_item implementation in mistune.Renderer
+         old_list_item = mistune.Renderer.list_item
+         new_list_item = lambda _, text: '<li class="task-list-item">%s</li>\n' % text
+
+         task_list_re = re.compile(r'\[[xX ]\] ')
+         m = task_list_re.match(text)
+         if m is None:
+             return old_list_item(self, text)
+         prefix = m.group()
+         checked = False
+         if prefix[1].lower() == 'x':
+             checked = True
+         if checked:
+             checkbox = '<input type="checkbox" class="task-list-item-checkbox" checked disabled/> '
+         else:
+             checkbox = '<input type="checkbox" class="task-list-item-checkbox" disabled /> '
+         return new_list_item(self, checkbox + text[m.end():])
+
+
 class MDRenderer(HighlightMixin,
-                 MathRendererMixin,
+                 # MathRendererMixin,
                  TocMixin,
+                 TasklistRenderMixin,
                  mistune.Renderer):
     pass
 
