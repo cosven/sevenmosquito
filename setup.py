@@ -21,7 +21,7 @@ setup(
         'Programming Language :: Python :: 3 :: Only',
         ),
     install_requires=[
-        'django==1.10.5',
+        'django==1.11.29',
         'markdown2==2.3.3',
         'PyMySQL==0.7.9',
         'qiniu',
