@@ -22,7 +22,7 @@ setup(
         ),
     install_requires=[
         'django==1.10.5',
-        'markdown2==2.3.3',
+        'markdown2==2.4.0',
         'PyMySQL==0.7.9',
         'qiniu',
         'djangorestframework',
